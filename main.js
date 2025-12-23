@@ -4,7 +4,7 @@
  */
 
 const API_KEY = 'a0cd61c9-08ca-4666-adc5-cfa927d3e73b';// ЗАМЕНИТЕ НА ВАШ КЛЮЧ
-const BASE_URL = 'http://exam-api-courses.std-900.ist.mospolytech.ru';
+const BASE_URL = 'https://exam-api-courses.std-900.ist.mospolytech.ru';
 
 let allCourses = [];
 let allTutors = [];
@@ -302,3 +302,4 @@ function showAlert(msg, type) {
     // Автоматическое исчезновение через 5 секунд (п. 3.2.3)
     setTimeout(() => { if(div) div.remove(); }, 5000);
 }
+

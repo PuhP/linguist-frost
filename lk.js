@@ -17,14 +17,21 @@ window.onload = async () => {
 };
 
 async function loadInitialData() {
-    try {
-        // Загружаем курсы для сопоставления ID и названий
+   try {
         const resCourses = await fetch(`${BASE_URL}/api/courses?api_key=${API_KEY}`);
-        allCourses = await resCourses.json();
         
+        if (resCourses.status === 502) {
+            showAlert('Ошибка 502: Сервер вуза временно "отдыхает". Пожалуйста, подождите 5-10 минут.', 'warning');
+            return;
+        }
+
+        if (!resCourses.ok) throw new Error('Ошибка сети');
+        
+        allCourses = await resCourses.json();
         await loadOrders();
     } catch (e) {
-        showAlert('Ошибка при загрузке данных с сервера ❄️', 'danger');
+        console.error("Ошибка в loadInitialData:", e);
+        showAlert('Ошибка доступа к данным. Проверьте соединение или попробуйте зайти по прямой ссылке на API для подтверждения сертификата.', 'danger');
     }
 }
 
@@ -220,4 +227,5 @@ function showAlert(msg, type) {
     // Исчезновение через 5 секунд (п. 3.2.3)
     setTimeout(() => { if (div) div.remove(); }, 5000);
 }
+
 

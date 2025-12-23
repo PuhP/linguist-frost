@@ -22,22 +22,30 @@ window.onload = async () => {
 // --- БЛОК ЗАГРУЗКИ ДАННЫХ (AJAX FETCH) ---
 
 async function loadTutors() {
-    try {
+  try {
         const res = await fetch(`${BASE_URL}/api/tutors?api_key=${API_KEY}`);
+        if (!res.ok) throw new Error(`Ошибка сервера: ${res.status}`);
         allTutors = await res.json();
         renderTutorsSearch();
     } catch (e) {
         console.error('Ошибка API репетиторов:', e);
+        showAlert('🎅 Упс! Почта Деда Мороза перегружена (Ошибка сервера). Попробуйте обновить страницу позже.', 'danger');
+        // Заполняем таблицу заглушкой, чтобы она не была пустой
+        document.getElementById('tutors-search-results').innerHTML = 
+            '<tr><td colspan="7" class="text-center text-muted">Сервер временно недоступен ❄️</td></tr>';
     }
 }
 
 async function loadCourses() {
-    try {
+  try {
         const res = await fetch(`${BASE_URL}/api/courses?api_key=${API_KEY}`);
+        if (!res.ok) throw new Error(`Ошибка сервера: ${res.status}`);
         allCourses = await res.json();
         renderCourses();
     } catch (e) {
         console.error('Ошибка API курсов:', e);
+        document.getElementById('courses-list').innerHTML = 
+            '<tr><td colspan="4" class="text-center text-muted">Не удалось загрузить список курсов ☃️</td></tr>';
     }
 }
 
@@ -302,4 +310,5 @@ function showAlert(msg, type) {
     // Автоматическое исчезновение через 5 секунд (п. 3.2.3)
     setTimeout(() => { if(div) div.remove(); }, 5000);
 }
+
 

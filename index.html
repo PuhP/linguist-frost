@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linguist Frost — Новогодняя Языковая Школа</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="christmas-theme">
+    <ul class="lightrope"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul>
+
+    <div id="alert-container" class="position-fixed top-0 end-0 p-3" style="z-index: 2000;"></div>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-danger sticky-top shadow">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">🎅 Linguist Frost</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#courses">Курсы</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#tutors">Репетиторы</a></li>
+                    <li class="nav-item"><a class="nav-link" href="lk.html">🎄 Личный кабинет</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero-section text-center py-5">
+        <div class="container">
+            <h1 class="display-3 fw-bold text-white">Учи языки в новом году! 🎄</h1>
+            <p class="lead text-white bg-dark bg-opacity-50 d-inline-block p-2 rounded">Наша миссия: сломать языковой барьер быстрее, чем тает снежинка.</p>
+        </div>
+    </header>
+
+    <section class="container my-5">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 border-danger text-center p-3 shadow-sm">
+                    <h3>❄️ Скидки</h3>
+                    <p>Раннее бронирование экономит до 10% бюджета на подарки!</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-danger text-center p-3 shadow-sm">
+                    <h3>🦌 Скорость</h3>
+                    <p>Доставка знаний быстрее, чем упряжка оленей.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-danger text-center p-3 shadow-sm">
+                    <h3>🎁 Материалы</h3>
+                    <p>Все учебники в подарок при записи до Рождества.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main class="container py-5 bg-white rounded-4 shadow">
+        <section id="courses">
+            <h2 class="text-center mb-4">Найти свой курс</h2>
+            <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                    <input type="text" id="course-search" class="form-control" placeholder="Название курса...">
+                </div>
+                <div class="col-md-6">
+                    <select id="level-filter" class="form-select">
+                        <option value="">Все уровни</option>
+                        <option value="Beginner">Beginner</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Advanced">Advanced</option>
+                    </select>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-danger">
+                        <tr>
+                            <th>Курс</th>
+                            <th>Уровень</th>
+                            <th>Преподаватель</th>
+                            <th>Действие</th>
+                        </tr>
+                    </thead>
+                    <tbody id="courses-list"></tbody>
+                </table>
+            </div>
+            <nav><ul class="pagination justify-content-center" id="courses-pagination"></ul></nav>
+        </section>
+
+        <hr class="my-5">
+
+        <section id="tutors" class="container py-5 mt-5 bg-white rounded-4 shadow">
+    <h2 class="text-center mb-4">🧙‍♂️ Поиск репетитора</h2>
+    
+    <form id="tutor-search-form" class="row g-3 mb-4 p-3 border rounded bg-light">
+        <div class="col-md-4">
+            <label class="form-label fw-bold">Уровень языка</label>
+            <select id="tutor-level-select" class="form-select">
+                <option value="">Любой</option>
+                <option value="Beginner">Начальный</option>
+                <option value="Intermediate">Средний</option>
+                <option value="Advanced">Продвинутый</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label fw-bold">Доступные дни</label>
+            <div id="tutor-days" class="d-flex flex-wrap gap-2">
+                <div class="form-check"><input class="form-check-input day-filter" type="checkbox" value="mon"> Пн</div>
+                <div class="form-check"><input class="form-check-input day-filter" type="checkbox" value="tue"> Вт</div>
+                <div class="form-check"><input class="form-check-input day-filter" type="checkbox" value="wed"> Ср</div>
+                <div class="form-check"><input class="form-check-input day-filter" type="checkbox" value="thu"> Чт</div>
+                <div class="form-check"><input class="form-check-input day-filter" type="checkbox" value="fri"> Пт</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label fw-bold">Временной интервал</label>
+            <div class="input-group">
+                <input type="number" id="tutor-time-from" class="form-control" placeholder="От (час)">
+                <input type="number" id="tutor-time-to" class="form-control" placeholder="До (час)">
+            </div>
+        </div>
+    </form>
+
+    <div class="table-responsive">
+        <table class="table table-hover align-middle border" id="tutors-search-table">
+            <thead class="table-danger">
+                <tr>
+                    <th>Фото</th>
+                    <th>Имя</th>
+                    <th>Уровень</th>
+                    <th>Языки общения</th>
+                    <th>Опыт (лет)</th>
+                    <th>Ставка (р/ч)</th>
+                    <th>Действие</th>
+                </tr>
+            </thead>
+            <tbody id="tutors-search-results">
+                </tbody>
+        </table>
+    </div>
+
+    <div id="tutor-details-container" class="mt-5 d-none p-4 border-start border-5 border-danger bg-light">
+        <h3 class="mb-3">🌟 Выбранный репетитор</h3>
+        <div class="table-responsive">
+            <table class="table table-bordered bg-white">
+                <thead class="table-secondary">
+                    <tr>
+                        <th>Фото</th>
+                        <th>Полное имя</th>
+                        <th>Предлагаемые языки</th>
+                        <th>Опыт</th>
+                        <th>Стоимость</th>
+                        <th>Подтверждение</th>
+                    </tr>
+                </thead>
+                <tbody id="tutor-details-body">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+    </main>
+
+    <div class="modal fade" id="orderModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <form id="order-form" class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">📦 Оформление заявки</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-3">
+                        <div class="col-md-6"><label>Курс</label><input id="m-course" class="form-control" readonly></div>
+                        <div class="col-md-6"><label>Учитель</label><input id="m-teacher" class="form-control" readonly></div>
+                        <div class="col-md-6"><label>Дата начала</label><select id="m-date" class="form-select" required></select></div>
+                        <div class="col-md-6"><label>Время начала</label><select id="m-time" class="form-select" required></select></div>
+                        <div class="col-md-6"><label>Студентов</label><input type="number" id="m-persons" class="form-control" min="1" max="20" value="1" required></div>
+                        <div class="col-md-6"><label>Длительность (нед)</label><input id="m-dur" class="form-control" readonly></div>
+                        
+                        <div class="col-12 border-top pt-3">
+                            <h6>Дополнительно:</h6>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-check"><input class="form-check-input opt" type="checkbox" id="supplementary"><label class="form-check-label">Материалы (+2000р/чел)</label></div>
+                                    <div class="form-check"><input class="form-check-input opt" type="checkbox" id="interactive"><label class="form-check-label">Платформа (x1.5)</label></div>
+                                    <div class="form-check"><input class="form-check-input opt" type="checkbox" id="excursions"><label class="form-check-label">Экскурсии (+25%)</label></div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check"><input class="form-check-input opt" type="checkbox" id="assessment"><label class="form-check-label">Оценка уровня (+300р)</label></div>
+                                    <div class="form-check"><input class="form-check-input opt" type="checkbox" id="personalized"><label class="form-check-label">Индивидуально (+1500р/нед)</label></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 mt-3 text-center">
+                            <h4 class="text-danger">Итого: <span id="final-price">0</span> руб.</h4>
+                            <div id="discounts-info" class="small text-muted"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="submit" class="btn btn-danger">Подтвердить заказ 🎄</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white py-5 mt-5 border-top border-5 border-danger text-center">
+        <p>📍 Снежный переулок, д. 2025 | 📞 8-800-FROST</p>
+        <p>© Linguist Frost — Пусть ваш английский сияет!</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>

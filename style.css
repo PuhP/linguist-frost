@@ -1,0 +1,48 @@
+/* Новогодний фон */
+.christmas-theme {
+    background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+
+.hero-section {
+    background: url('https://www.transparenttextures.com/patterns/snow.png'), rgba(255,255,255,0.1);
+    border-bottom: 5px solid #dc3545;
+}
+
+/* Гирлянда (CSS анимация) */
+.lightrope {
+    text-align: center; white-space: nowrap; overflow: hidden;
+    position: absolute; z-index: 1050; margin: -15px 0 0 0; padding: 0;
+    pointer-events: none; width: 100%;
+}
+.lightrope li {
+    position: relative; display: inline-block; list-style: none;
+    margin: 0 15px; padding: 0; width: 12px; height: 28px;
+    border-radius: 50%; background: #00f7a5;
+    animation: flash-1 2s infinite;
+}
+.lightrope li:nth-child(even) { background: #f70000; animation-name: flash-2; }
+@keyframes flash-1 { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; box-shadow: 0 2px 20px #00f7a5; } }
+@keyframes flash-2 { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; box-shadow: 0 2px 20px #f70000; } }
+
+/* Карточки и таблицы */
+.card { transition: transform 0.3s; cursor: pointer; border-radius: 15px; }
+.card:hover { transform: translateY(-10px) rotate(1deg); }
+.pagination .page-link { color: #dc3545; }
+.pagination .active .page-link { background-color: #dc3545; border-color: #dc3545; }
+
+/* Выделение выбранного репетитора */
+.table-active-row {
+    background-color: #f8d7da !important; /* Нежно-красный новогодний цвет */
+    border: 2px solid #dc3545 !important;
+}
+
+#tutor-details-container {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}

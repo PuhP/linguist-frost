@@ -4,7 +4,7 @@
  */
 
 const API_KEY = 'a0cd61c9-08ca-4666-adc5-cfa927d3e73b';// ЗАМЕНИТЕ НА ВАШ КЛЮЧ
-const BASE_URL = 'https://exam-api-courses.std-900.ist.mospolytech.ru';
+const BASE_URL = 'http://exam-api-courses.std-900.ist.mospolytech.ru';
 
 let allCourses = [];
 let allTutors = [];
@@ -22,30 +22,22 @@ window.onload = async () => {
 // --- БЛОК ЗАГРУЗКИ ДАННЫХ (AJAX FETCH) ---
 
 async function loadTutors() {
-  try {
+    try {
         const res = await fetch(`${BASE_URL}/api/tutors?api_key=${API_KEY}`);
-        if (!res.ok) throw new Error(`Ошибка сервера: ${res.status}`);
         allTutors = await res.json();
         renderTutorsSearch();
     } catch (e) {
         console.error('Ошибка API репетиторов:', e);
-        showAlert('🎅 Упс! Почта Деда Мороза перегружена (Ошибка сервера). Попробуйте обновить страницу позже.', 'danger');
-        // Заполняем таблицу заглушкой, чтобы она не была пустой
-        document.getElementById('tutors-search-results').innerHTML = 
-            '<tr><td colspan="7" class="text-center text-muted">Сервер временно недоступен ❄️</td></tr>';
     }
 }
 
 async function loadCourses() {
-  try {
+    try {
         const res = await fetch(`${BASE_URL}/api/courses?api_key=${API_KEY}`);
-        if (!res.ok) throw new Error(`Ошибка сервера: ${res.status}`);
         allCourses = await res.json();
         renderCourses();
     } catch (e) {
         console.error('Ошибка API курсов:', e);
-        document.getElementById('courses-list').innerHTML = 
-            '<tr><td colspan="4" class="text-center text-muted">Не удалось загрузить список курсов ☃️</td></tr>';
     }
 }
 
@@ -193,38 +185,46 @@ function calculatePrice() {
 
     // 2. Коэффициент выходного дня (п. 3.3.4)
     const date = new Date(startDateStr);
-    if (date.getDay() === 0 || date.getDay() === 6) basePrice *= 1.5;
+    const isWeekend = (date.getDay() === 0 || date.getDay() === 6);
+    if (isWeekend) basePrice *= 1.5;
 
     // 3. Надбавки за время (п. 3.3.4)
     const hour = parseInt(startTimeStr.split(':')[0]);
     let morningSurcharge = (hour >= 9 && hour <= 12) ? 400 : 0;
     let eveningSurcharge = (hour >= 18 && hour <= 20) ? 1000 : 0;
 
-    // Промежуточный итог по формуле ТЗ
+    // Итого по формуле: ((Base * Weekend) + Morning + Evening) * Students
     let total = (basePrice + morningSurcharge + eveningSurcharge) * persons;
 
     // 4. Опции и скидки (п. 3.3.5)
     
-    // Ранняя регистрация (за месяц до начала) - 10%
+    // Ранняя регистрация (за месяц) - минус 10%
     const diffDays = Math.ceil((new Date(startDateStr) - new Date()) / (1000 * 60 * 60 * 24));
     if (diffDays >= 30) total *= 0.9;
 
-    // Групповая скидка (5+ человек) - 15%
+    // Группа 5+ человек - минус 15%
     if (persons >= 5) total *= 0.85;
 
-    // Интенсив (+20%), если более 20 часов в неделю
-    if (course.week_length > 20) total *= 1.2;
+    // Интенсив (5+ часов в неделю) + 20% (п. 3.3.5 подпункт 3)
+    if (course.week_length >= 5) total *= 1.2;
 
-    // Пользовательские опции (чекбоксы)
+    // Доп. материалы: +2000 за студента
     if (document.getElementById('supplementary').checked) total += (2000 * persons);
+
+    // Индивидуальные занятия: +1500 за каждую неделю
     if (document.getElementById('personalized').checked) total += (1500 * course.total_length);
-    if (document.getElementById('assessment').checked) total += 300;
+
+    // Экскурсии: +25%
     if (document.getElementById('excursions').checked) total *= 1.25;
+
+    // Оценка уровня: +300 руб
+    if (document.getElementById('assessment').checked) total += 300;
+
+    // Платформа: +50% (множитель 1.5)
     if (document.getElementById('interactive').checked) total *= 1.5;
 
     document.getElementById('final-price').innerText = Math.round(total);
 }
-
 // --- ОТПРАВКА ДАННЫХ (п. 3.2.2, 4.5) ---
 
 document.getElementById('order-form').onsubmit = async (e) => {
@@ -310,5 +310,3 @@ function showAlert(msg, type) {
     // Автоматическое исчезновение через 5 секунд (п. 3.2.3)
     setTimeout(() => { if(div) div.remove(); }, 5000);
 }
-
-
